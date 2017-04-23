@@ -1,0 +1,11 @@
+# elm-package generated files
+elm-stuff/
+
+# generated files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist
+
+# node
+node_modules
