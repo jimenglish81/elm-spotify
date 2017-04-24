@@ -1,4 +1,28 @@
+.brand-logo {
+  font-family: 'Rubik', sans-serif;
+}
+
+nav {
+  background: #282828;
+}
+
 .material-icons {
   cursor: pointer;
   margin-right: 5px;
+}
+
+.image-grid {
+  flex-flow: row wrap;
+  display: flex;
+}
+
+.image-grid div {
+  flex: auto;
+  width: 200px;
+  margin: .5vw;
+}
+
+.image-grid div img { 
+  width: 100%;
+  height: auto;
 }

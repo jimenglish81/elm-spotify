@@ -6,7 +6,14 @@ type alias Model =
 
 initialModel : Model
 initialModel =
-    { playlists = [ Playlist "1" "playlist" "http://google.com" ]
+    { playlists = [
+      Playlist "1" "playlist" "http://google.com"
+      , Playlist "2" "playlist2" "http://google.com"
+      , Playlist "3" "playlist3" "http://google.com"
+      , Playlist "4" "playlist" "http://google.com"
+      , Playlist "5" "playlist2" "http://google.com"
+      , Playlist "6" "playlist3" "http://google.com" 
+    ]
     }
 
 type alias PlaylistId =
