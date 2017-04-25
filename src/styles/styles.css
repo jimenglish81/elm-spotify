@@ -2,10 +2,6 @@
   font-family: 'Rubik', sans-serif;
 }
 
-nav {
-  background: #282828;
-}
-
 .material-icons {
   cursor: pointer;
   margin-right: 5px;
@@ -22,7 +18,24 @@ nav {
   margin: .5vw;
 }
 
-.image-grid div img { 
+.image-grid div img {
   width: 100%;
   height: auto;
 }
+
+.input-field input[type=search] {
+  background: #282828;
+  color: #fff;
+}
+
+.input-field input[type=search]:focus {
+  background: #242424;
+  color: #1ed760;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 0 #fff;
+}
+
+/*
+.input-field input[type=search]:-webkit-placeholder {
+  color: pink;
+}*/

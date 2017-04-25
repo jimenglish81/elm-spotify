@@ -1,19 +1,16 @@
 module Models exposing (..)
 
+import RemoteData exposing (WebData)
+
 type alias Model =
-    { playlists : List Playlist
+    { playlists : WebData (List Playlist)
+    , query : String
     }
 
 initialModel : Model
 initialModel =
-    { playlists = [
-      Playlist "1" "playlist" "http://google.com"
-      , Playlist "2" "playlist2" "http://google.com"
-      , Playlist "3" "playlist3" "http://google.com"
-      , Playlist "4" "playlist" "http://google.com"
-      , Playlist "5" "playlist2" "http://google.com"
-      , Playlist "6" "playlist3" "http://google.com" 
-    ]
+    { playlists = RemoteData.NotAsked
+    , query = ""
     }
 
 type alias PlaylistId =
