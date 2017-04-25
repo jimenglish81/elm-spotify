@@ -14,8 +14,6 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
--- MAIN
-
 main : Program Never Model Msg
 main =
     program

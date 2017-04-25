@@ -13,13 +13,13 @@ searchUrl query =
 
 search : String -> Cmd Msg
 search query =
-    Http.get (searchUrl query) playListsDecode 
+    Http.get (searchUrl query) playListsDecode
       |> RemoteData.sendRequest
       |> Cmd.map Msgs.OnSearch
 
 playListsDecode : Decode.Decoder (List Playlist)
 playListsDecode =
-    Decode.list playlistDecode
+    Decode.at ["playlists", "items"] (Decode.list playlistDecode)
 
 playlistDecode : Decode.Decoder (Playlist)
 playlistDecode =

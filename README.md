@@ -1,2 +1,3 @@
-```yarn run dev```
+Elm Spotify learning exercise
 
+```yarn run dev```
