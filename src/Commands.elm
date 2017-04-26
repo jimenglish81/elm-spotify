@@ -26,9 +26,13 @@ playlistDecode =
     decode Playlist
       |> required "id" Decode.string
       |> required "name" Decode.string
-      |> required "href" Decode.string
+      |> requiredAt [ "external_urls" ] hrefDecode
       |> requiredAt [ "images" ] (Decode.list imageDecode)
+
+hrefDecode : Decode.Decoder (String)
+hrefDecode =
+    Decode.at [ "spotify" ] (Decode.string)
 
 imageDecode : Decode.Decoder (String)
 imageDecode =
-    Decode.at ["url"] (Decode.string)
+    Decode.at [ "url" ] (Decode.string)

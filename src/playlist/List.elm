@@ -59,7 +59,8 @@ maybeList response =
       list playlists
 
     RemoteData.Failure error ->
-      text (toString error)
+      errorMsg
+
 
 list : List Playlist -> Html Msg
 list playlists =
@@ -70,12 +71,14 @@ playlistRow : Playlist -> Html Msg
 playlistRow playlist =
   let
     url =
-        Maybe.withDefault "something" (List.head playlist.images)
+        Maybe.withDefault "https://image.flaticon.com/icons/png/512/226/226773.png" (List.head playlist.images)
   in
-    div []
+    div [ class "image-grid-item" ]
       [ a
         [ href playlist.href, target "_blank", title playlist.name ]
-        [ img [ src url, alt playlist.name ] [] ]
+        [ img [ src url, alt playlist.name ] []
+        , div [ class "image-grid-item-title" ] [ text playlist.name ]
+        ]
       ]
 
 onEnter : Msg -> Attribute Msg
@@ -95,3 +98,8 @@ loader =
       [ div [ class "uil-cube-css" ]
         [ div [] [], div [] [], div [] [], div [] [] ]
       ]
+
+errorMsg : Html Msg
+errorMsg =
+    div [ class "error" ]
+      [ text "There has been an error." ]

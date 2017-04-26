@@ -1,7 +1,15 @@
 @import url("loader.css");
 
+body {
+  background: #282828;
+}
+
 .brand-logo {
   font-family: 'Rubik', sans-serif;
+}
+
+nav .nav-wrapper {
+  border-bottom: 2px solid #1ed760;
 }
 
 .material-icons {
@@ -10,34 +18,49 @@
 }
 
 .image-grid {
+  justify-content: center;
   flex-flow: row wrap;
   display: flex;
 }
 
-.image-grid div {
-  max-width: 200px;
+.image-grid .image-grid-item {
   overflow: hidden;
-  flex: auto;
-  width: 200px;
+  flex: 0 1 170px;
+  width: 23%;
   margin: .5vw;
 }
 
-.image-grid div img {
-  border-radius: 100px;
+.image-grid img {
+  border-radius: 150px;
   width: 100%;
   height: auto;
 }
 
+.image-grid .image-grid-item a {
+  display: block;
+  color: #1ed760;
+}
+
+.image-grid .image-grid-item-title {
+  text-align: center;
+}
+
 .input-field input[type=search] {
-  background: #282828;
+  background: #141414;
   color: #fff;
 }
 
 .input-field input[type=search]:focus {
-  background: #242424;
+  background: #141414;
   color: #1ed760;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 0 #fff;
+}
+
+.error {
+  padding: 20px 0;
+  color: #e3170d;
+  text-align: center;
 }
 
 /*.input-field input[type=search]:placeholder {
