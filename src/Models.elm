@@ -20,4 +20,5 @@ type alias Playlist =
     { id : PlaylistId
     , name : String
     , href : String
+    , images : (List String)
     }

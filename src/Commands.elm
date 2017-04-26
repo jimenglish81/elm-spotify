@@ -2,7 +2,7 @@ module Commands exposing (..)
 
 import Http exposing (..)
 import Json.Decode as Decode
-import Json.Decode.Pipeline exposing (decode, required)
+import Json.Decode.Pipeline exposing (decode, required, requiredAt)
 import Msgs exposing (Msg)
 import Models exposing (Playlist)
 import RemoteData
@@ -27,3 +27,8 @@ playlistDecode =
       |> required "id" Decode.string
       |> required "name" Decode.string
       |> required "href" Decode.string
+      |> requiredAt [ "images" ] (Decode.list imageDecode)
+
+imageDecode : Decode.Decoder (String)
+imageDecode =
+    Decode.at ["url"] (Decode.string)

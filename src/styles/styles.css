@@ -15,12 +15,15 @@
 }
 
 .image-grid div {
+  max-width: 200px;
+  overflow: hidden;
   flex: auto;
   width: 200px;
   margin: .5vw;
 }
 
 .image-grid div img {
+  border-radius: 100px;
   width: 100%;
   height: auto;
 }
@@ -37,7 +40,6 @@
   text-shadow: 0 0 0 #fff;
 }
 
-/*
-.input-field input[type=search]:-webkit-placeholder {
+/*.input-field input[type=search]:placeholder {
   color: pink;
 }*/

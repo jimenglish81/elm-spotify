@@ -1,7 +1,7 @@
 module Playlist.List exposing (..)
 
 import Html exposing (..)
-import Html.Attributes exposing (autofocus, class, id, placeholder, required, type_)
+import Html.Attributes exposing (alt, autofocus, class, href, id, placeholder, required, src, title, target, type_)
 import Html.Events exposing (..)
 import Models exposing (Playlist)
 import Msgs exposing (Msg)
@@ -68,8 +68,15 @@ list playlists =
 
 playlistRow : Playlist -> Html Msg
 playlistRow playlist =
+  let
+    url =
+        Maybe.withDefault "something" (List.head playlist.images)
+  in
     div []
-      [ text playlist.name ]
+      [ a
+        [ href playlist.href, target "_blank", title playlist.name ]
+        [ img [ src url, alt playlist.name ] [] ]
+      ]
 
 onEnter : Msg -> Attribute Msg
 onEnter msg =
