@@ -42,6 +42,10 @@ nav .nav-wrapper {
 }
 
 .image-grid .image-grid-item-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
   text-align: center;
 }
 
