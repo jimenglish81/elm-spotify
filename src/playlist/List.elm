@@ -12,7 +12,8 @@ view : WebData (List Playlist) -> Html Msg
 view response =
     div []
       [ navBar
-      , maybeList response
+      , main_ [ class "container" ]
+        [ maybeList response ]
       ]
 
 navBar : Html Msg
@@ -52,7 +53,7 @@ maybeList response =
       text ""
 
     RemoteData.Loading ->
-      text "Loading..."
+      loader
 
     RemoteData.Success playlists ->
       list playlists
@@ -62,10 +63,8 @@ maybeList response =
 
 list : List Playlist -> Html Msg
 list playlists =
-    main_ [ class "container" ]
-      [ div [ class "image-grid" ]
-        (List.map playlistRow playlists)
-      ]
+    div [ class "image-grid" ]
+      (List.map playlistRow playlists)
 
 playlistRow : Playlist -> Html Msg
 playlistRow playlist =
@@ -82,3 +81,10 @@ onEnter msg =
           Json.fail "not ENTER"
     in
       on "keydown" (Json.andThen isEnter keyCode)
+
+loader : Html Msg
+loader =
+    div [ class "loader" ]
+      [ div [ class "uil-cube-css" ]
+        [ div [] [], div [] [], div [] [], div [] [] ]
+      ]
