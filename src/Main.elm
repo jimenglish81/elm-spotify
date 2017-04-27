@@ -1,22 +1,32 @@
 module Main exposing (..)
 
-import Html exposing (program)
 import Msgs exposing (Msg)
-import Models exposing (Model, initialModel)
+import Models exposing (Model, initialModel, Flags, spotifyAuthClient, Route(..))
 import View exposing (view)
 import Update exposing (update)
+import Navigation exposing (Location)
+import Routing exposing (parseLocation, getRouteCmd)
+import OAuth
 
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, Cmd.none )
+init : Flags -> Location -> ( Model, Cmd Msg )
+init flags location =
+  let
+    currentRoute =
+      parseLocation location
+
+    client = (spotifyAuthClient flags.clientId flags.redirectUrl)
+
+    cmd = Cmd.batch [ OAuth.init client location |> Cmd.map Msgs.Token, getRouteCmd currentRoute ]
+  in
+    ( initialModel currentRoute client flags.redirectUrl, cmd )
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    program
+    Navigation.programWithFlags Msgs.OnLocationChange
       { init = init
       , view = view
       , update = update

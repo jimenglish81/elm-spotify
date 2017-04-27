@@ -4,12 +4,30 @@ body {
   background: #282828;
 }
 
+h3 {
+  color: #fff;
+}
+
 .brand-logo {
   font-family: 'Rubik', sans-serif;
 }
 
+.username {
+  text-align: center;
+}
+
 nav .nav-wrapper {
-  border-bottom: 2px solid #1ed760;
+  border-bottom: 2px solid #2ebd59;
+  display: flex;
+}
+nav .nav-wrapper li {
+  width: 100%;
+}
+
+nav .nav-wrapper ul {
+  width: 120px;
+  background: #2ebd59;
+  text-transform: uppercase;
 }
 
 .material-icons {
@@ -38,7 +56,7 @@ nav .nav-wrapper {
 
 .image-grid .image-grid-item a {
   display: block;
-  color: #1ed760;
+  color: #2ebd59;
 }
 
 .image-grid .image-grid-item-title {
@@ -49,6 +67,10 @@ nav .nav-wrapper {
   text-align: center;
 }
 
+.input-field {
+  width: calc(100% - 120px);
+}
+
 .input-field input[type=search] {
   background: #141414;
   color: #fff;
@@ -56,7 +78,7 @@ nav .nav-wrapper {
 
 .input-field input[type=search]:focus {
   background: #141414;
-  color: #1ed760;
+  color: #2ebd59;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 0 #fff;
 }
@@ -67,6 +89,27 @@ nav .nav-wrapper {
   text-align: center;
 }
 
-/*.input-field input[type=search]:placeholder {
-  color: pink;
-}*/
+.follow-bar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.collection {
+  border-color: #282828;
+}
+
+.collection .collection-item {
+  color: #fff;
+  background: #242424;
+  border-color: #282828;
+}
+
+.btn {
+  background: #2ebd59;
+}
+
+.btn:hover, .btn-large:hover {
+    background-color: rgba(46,189,89,0.8);
+}

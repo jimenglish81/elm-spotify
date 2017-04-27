@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --port 3001"
+    "build": "webpack",
+    "dev": "SPOTIFY_REDIRECT_URL=\"'http://localhost:3001/'\" webpack-dev-server --port 3001"
   },
   "author": "",
   "license": "ISC",
