@@ -5,5 +5,5 @@ const mountNode = document.getElementById('main');
 
 const app = Elm.Main.embed(mountNode, {
   clientId: SPOTIFY_CLIENT_ID || '',
-  redirectUrl: SPOTIFY_REDIRECT_URL || '',
+  redirectUrl: `${window.location.protocol}//${window.location.host}/`,
 });

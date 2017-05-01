@@ -35,7 +35,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
-      SPOTIFY_REDIRECT_URL: process.env.SPOTIFY_REDIRECT_URL,
     }),
   ],
   devServer: {
