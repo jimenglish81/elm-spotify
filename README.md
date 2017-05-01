@@ -1,4 +1,4 @@
-# Elm Spotify learning exercise
+# Elm Spotify
 
 Set ENV `SPOTIFY_CLIENT_ID` as the Spotify oAuth client id.
 
