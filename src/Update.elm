@@ -3,7 +3,7 @@ module Update exposing (..)
 import Commands exposing (getTracks, followPlaylist, getUser, checkFollowPlaylist)
 import Msgs exposing (Msg)
 import Models exposing (Model)
-import Routing exposing (parseLocation, getRouteCmd)
+import Routing exposing (parseLocation, getRouteCmd, redirectToSearch)
 import Navigation
 import RemoteData exposing (WebData)
 
@@ -12,6 +12,9 @@ update msg model =
     case msg of
       Msgs.OnSearch (response) ->
         ( { model | playlists = response }, Cmd.none )
+
+      Msgs.OnPlaylistView (RemoteData.Failure _) ->
+        ( model, redirectToSearch model.query )
 
       Msgs.OnPlaylistView response ->
         ( { model | tracks = response }, Cmd.none )
@@ -24,8 +27,7 @@ update msg model =
           ( { model | route = newRoute }, getRouteCmd newRoute )
 
       Msgs.UpdateQuery str ->
-        { model | query = str }
-          ! []
+        ( { model | query = str }, Cmd.none )
 
       Msgs.ViewPlaylist userId playlistId ->
         let
@@ -51,7 +53,7 @@ update msg model =
           )
 
       Msgs.Search ->
-        ( model, Navigation.newUrl ("#search/" ++ model.query) )
+        ( model, redirectToSearch model.query )
 
       Msgs.Token (Ok t) ->
         let

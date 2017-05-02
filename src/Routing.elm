@@ -35,7 +35,7 @@ parseLocation location =
         route
 
       Nothing ->
-        SearchRoute
+        NotFoundRoute
 
 sendMsg : msg -> Cmd msg
 sendMsg msg =
@@ -51,6 +51,9 @@ getRouteCmd route =
       PlaylistRoute userId playlistId ->
         sendMsg (Msgs.ViewPlaylist userId playlistId)
 
+      NotFoundRoute ->
+        redirectToSearch ""
+
       _ ->
         Cmd.none
 
@@ -64,3 +67,15 @@ maybeToken token valid invalid =
 
     Nothing ->
       invalid
+
+redirectToSearch : String -> Cmd Msg
+redirectToSearch query =
+    let
+      url =
+        case query of
+          "" ->
+            searchPath
+          _ ->
+            searchResultPath query
+    in
+      Navigation.newUrl (url)

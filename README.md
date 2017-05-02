@@ -9,5 +9,6 @@ Set ENV `SPOTIFY_CLIENT_ID` as the Spotify oAuth client id.
 <a href="http://frail-scarecrow.surge.sh" target="_blank">See it here</a>
 
 ## TODO
-- fix not found route
-- redirect if not authenticated
+
+- add 30 second preview to tracks
+- restore session on refresh?
