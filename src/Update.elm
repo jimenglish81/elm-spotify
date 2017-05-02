@@ -12,9 +12,6 @@ update msg model =
       Msgs.OnSearch (response) ->
         ( { model | playlists = response }, Cmd.none )
 
-      Msgs.OnPlaylistView (RemoteData.Failure _) ->
-        ( model, redirectToSearch model.query )
-
       Msgs.OnPlaylistView response ->
         ( { model | tracks = response }, Cmd.none )
 
