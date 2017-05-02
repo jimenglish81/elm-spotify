@@ -4,7 +4,6 @@ import Commands exposing (getTracks, followPlaylist, getUser, checkFollowPlaylis
 import Msgs exposing (Msg)
 import Models exposing (Model)
 import Routing exposing (parseLocation, getRouteCmd, redirectToSearch)
-import Navigation
 import RemoteData exposing (WebData)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
