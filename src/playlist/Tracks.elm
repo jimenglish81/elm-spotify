@@ -14,12 +14,12 @@ view model playlist =
       [ h3 [] [ text playlist.name ]
       , maybeFollowBtn playlist
       ]
-    , maybeList model.isPlaying model.currentSrc model.tracks
+    , maybeList model
     ]
 
-maybeList : Bool -> Maybe String -> WebData (List Track) -> Html Msg
-maybeList isPlaying currentSrc response =
-    case response of
+maybeList : Model -> Html Msg
+maybeList model =
+    case model.tracks of
       RemoteData.NotAsked ->
         text ""
 
@@ -27,7 +27,7 @@ maybeList isPlaying currentSrc response =
         text ""
 
       RemoteData.Success tracks ->
-        list isPlaying currentSrc tracks
+        list model.isPlaying model.currentSrc tracks
 
       RemoteData.Failure error ->
         text ""
