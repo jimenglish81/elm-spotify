@@ -100,6 +100,12 @@ nav .nav-wrapper ul {
   color: #fff;
   background: #242424;
   border-color: #282828;
+  display: flex;
+  align-items: center;
+}
+
+.track-icon {
+  color: #2ebd59;
 }
 
 .btn {

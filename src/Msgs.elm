@@ -20,3 +20,5 @@ type Msg
     | OnUnFollow (RemoteData.WebData PlaylistId)
     | OnUser (WebData User)
     | OnCheckFollowing (WebData Bool)
+    | AudioStart String
+    | AudioStop String

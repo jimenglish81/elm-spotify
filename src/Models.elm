@@ -14,6 +14,8 @@ type alias Model =
     , route: Route
     , userId : String
     , playlistId : String
+    , currentSrc : Maybe String
+    , isPlaying : Bool
     }
 
 initialModel : Route -> OAuth.Client -> String -> Model
@@ -28,6 +30,8 @@ initialModel route client redirectUrl =
     , route = route
     , userId = ""
     , playlistId = ""
+    , currentSrc = Nothing
+    , isPlaying = False
     }
 
 type Route
@@ -57,6 +61,7 @@ type alias Playlist =
 type alias Track =
     { name : String
     , artists : (List String)
+    , previewUrl: String
     }
 
 type alias User =

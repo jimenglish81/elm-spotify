@@ -14,11 +14,11 @@ view model playlist =
       [ h3 [] [ text playlist.name ]
       , maybeFollowBtn playlist
       ]
-    , maybeList model.tracks
+    , maybeList model.isPlaying model.currentSrc model.tracks
     ]
 
-maybeList : WebData (List Track) -> Html Msg
-maybeList response =
+maybeList : Bool -> Maybe String -> WebData (List Track) -> Html Msg
+maybeList isPlaying currentSrc response =
     case response of
       RemoteData.NotAsked ->
         text ""
@@ -27,24 +27,54 @@ maybeList response =
         text ""
 
       RemoteData.Success tracks ->
-        list tracks
+        list isPlaying currentSrc tracks
 
       RemoteData.Failure error ->
         text ""
 
-list : List Track -> Html Msg
-list tracks =
+list : Bool -> Maybe String -> List Track -> Html Msg
+list isPlaying currentSrc tracks =
     ul [ class "collection" ]
-      (List.map trackRow tracks)
+      (List.map (trackRow isPlaying currentSrc) tracks)
 
-trackRow : Track -> Html Msg
-trackRow track =
+trackRow : Bool -> Maybe String -> Track -> Html Msg
+trackRow isPlaying currentSrc track =
     let
       artist =
           Maybe.withDefault "unknown" (List.head track.artists)
+
+      src =
+          Maybe.withDefault "" currentSrc
+
+      msg =
+        if track.previewUrl == src && isPlaying then
+          Msgs.AudioStop src
+        else
+          Msgs.AudioStart track.previewUrl
+
+      icon =
+        if track.previewUrl == src && isPlaying then
+          "pause"
+        else if track.previewUrl == "" then
+          "remove"
+        else
+          "play_arrow"
+
+      action =
+        if track.previewUrl == "" then
+          i [ class "material-icons track-icon" ]
+            [ text icon ]
+        else
+          a [ onClick msg ]
+            [ i
+              [ class "material-icons track-icon" ]
+              [ text icon ]
+            ]
     in
       li [ class "collection-item" ]
-        [ text (track.name ++ " - " ++  artist) ]
+        [ action
+         , div [] [ text (track.name ++ " - " ++  artist) ]
+         ]
 
 followBtn : String -> Bool -> Html Msg
 followBtn playlistName isFollowing =

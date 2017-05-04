@@ -5,11 +5,12 @@ import Msgs exposing (Msg)
 import Models exposing (Model)
 import Routing exposing (parseLocation, getRouteCmd, redirectToSearch)
 import RemoteData exposing (WebData)
+import Ports
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-      Msgs.OnSearch (response) ->
+      Msgs.OnSearch response ->
         ( { model | playlists = response }, Cmd.none )
 
       Msgs.OnPlaylistView response ->
@@ -19,8 +20,16 @@ update msg model =
         let
           newRoute =
             parseLocation location
+
+          cmd =
+            case model.currentSrc of
+              Just src ->
+                Ports.audioStop src
+
+              Nothing ->
+                Cmd.none
         in
-          ( { model | route = newRoute }, getRouteCmd newRoute )
+          ( { model | route = newRoute, currentSrc = Nothing, isPlaying = False }, Cmd.batch [ cmd, getRouteCmd newRoute ] )
 
       Msgs.UpdateQuery str ->
         ( { model | query = str }, Cmd.none )
@@ -83,6 +92,12 @@ update msg model =
 
       Msgs.OnUser response ->
         ( { model | user = response }, Cmd.none )
+
+      Msgs.AudioStart src ->
+        ( { model | currentSrc = Just src, isPlaying = True }, Ports.audioStart src )
+
+      Msgs.AudioStop src ->
+        ( { model | isPlaying = False }, Ports.audioStop src )
 
 updateIsFollowing : Model -> WebData Bool -> Model
 updateIsFollowing model isFollowing =

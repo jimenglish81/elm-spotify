@@ -2,7 +2,7 @@ module Commands exposing (..)
 
 import Http exposing (..)
 import Json.Decode as Decode
-import Json.Decode.Pipeline exposing (decode, required, requiredAt, hardcoded)
+import Json.Decode.Pipeline exposing (decode, required, requiredAt, hardcoded, optional)
 import Msgs exposing (Msg)
 import Models exposing (User, Playlist, Track, PlaylistId, UserId)
 import RemoteData exposing (WebData)
@@ -129,6 +129,7 @@ trackDecode =
     decode Track
       |> required "name" Decode.string
       |> requiredAt [ "artists" ] (Decode.list artistDecode)
+      |> optional "preview_url" Decode.string ""
 
 artistDecode : Decode.Decoder (String)
 artistDecode =

@@ -1,3 +1,4 @@
+import audioPort from './native/audio';
 import './styles/styles.css';
 
 const Elm = require('./Main.elm');
@@ -7,3 +8,5 @@ const app = Elm.Main.embed(mountNode, {
   clientId: SPOTIFY_CLIENT_ID || '',
   redirectUrl: `${window.location.protocol}//${window.location.host}/`,
 });
+
+audioPort(app);
