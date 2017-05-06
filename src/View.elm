@@ -10,56 +10,60 @@ import Playlist.Nav
 import Playlist.Tracks
 import Common.View exposing (errorMsg, loader)
 
+
 view : Model -> Html Msg
 view model =
     div []
-      [ Playlist.Nav.view model
-      , main_ [ class "container" ]
-        [ page model ]
-      ]
+        [ Playlist.Nav.view model
+        , main_ [ class "container" ] [ page model ]
+        ]
+
 
 page : Model -> Html Msg
 page model =
-  case model.route of
-    Models.SearchRoute ->
-      text ""
+    case model.route of
+        Models.SearchRoute ->
+            text ""
 
-    Models.SearchResultRoute query ->
-      Playlist.List.view model
+        Models.SearchResultRoute _ ->
+            Playlist.List.view model
 
-    Models.PlaylistRoute _ playlistId ->
-      playlistPage model playlistId
+        Models.PlaylistRoute _ playlistId ->
+            playlistPage model playlistId
 
-    Models.NotFoundRoute ->
-      notFoundView
+        Models.NotFoundRoute ->
+            notFoundView
+
 
 playlistPage : Model -> PlaylistId -> Html Msg
 playlistPage model playlistId =
-  case model.playlists of
-    RemoteData.NotAsked ->
-      text ""
+    case model.playlists of
+        RemoteData.NotAsked ->
+            text ""
 
-    RemoteData.Loading ->
-      loader
+        RemoteData.Loading ->
+            loader
 
-    RemoteData.Success playlists ->
-      let
-        maybePlaylist =
-          playlists
-            |> List.filter (\playlist -> playlist.id == playlistId)
-            |> List.head
-      in
-        case maybePlaylist of
-          Just playlist ->
-            Playlist.Tracks.view model playlist
+        RemoteData.Success playlists ->
+            let
+                maybePlaylist =
+                    playlists
+                        |> List.filter
+                            (\{ id } -> id == playlistId)
+                        |> List.head
+            in
+                case maybePlaylist of
+                    Just playlist ->
+                        Playlist.Tracks.view model playlist
 
-          Nothing ->
-            notFoundView
+                    Nothing ->
+                        notFoundView
 
-    RemoteData.Failure _ ->
-      errorMsg
+        RemoteData.Failure _ ->
+            errorMsg
+
 
 notFoundView : Html msg
 notFoundView =
     div [ class "error" ]
-      [ text "Not found" ]
+        [ text "Not found" ]

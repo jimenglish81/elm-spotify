@@ -1,10 +1,11 @@
 module Msgs exposing (..)
 
-import Models exposing (User, Playlist, Track, UserId, PlaylistId)
+import Models exposing (User, Playlist, Track, UserId, PlaylistId, Url(..))
 import RemoteData exposing (WebData)
 import Navigation exposing (Location)
 import OAuth
 import Http
+
 
 type Msg
     = Search
@@ -20,5 +21,5 @@ type Msg
     | OnUnFollow (RemoteData.WebData PlaylistId)
     | OnUser (WebData User)
     | OnCheckFollowing (WebData Bool)
-    | AudioStart String
-    | AudioStop String
+    | AudioStart Url
+    | AudioStop Url
