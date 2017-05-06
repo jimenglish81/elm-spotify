@@ -129,7 +129,7 @@ trackDecode =
     decode Track
       |> required "name" Decode.string
       |> requiredAt [ "artists" ] (Decode.list artistDecode)
-      |> optional "preview_url" Decode.string ""
+      |> required "preview_url" (Decode.nullable Decode.string)
 
 artistDecode : Decode.Decoder (String)
 artistDecode =

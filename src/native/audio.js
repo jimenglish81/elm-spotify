@@ -15,10 +15,6 @@ const addTask = (app) => {
   }, false);
 
   app.ports.audioStart.subscribe((src) => {
-    if (src === '') {
-      return;
-    }
-
     if (audio.src !== src) {
       audio.src = src;
       audio.load();

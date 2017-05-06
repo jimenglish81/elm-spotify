@@ -27,54 +27,54 @@ maybeList model =
         text ""
 
       RemoteData.Success tracks ->
-        list model.isPlaying model.currentSrc tracks
+        list model.isPlaying model.currentTrackUrl tracks
 
       RemoteData.Failure error ->
         text ""
 
 list : Bool -> Maybe String -> List Track -> Html Msg
-list isPlaying currentSrc tracks =
+list isPlaying currentTrackUrl tracks =
     ul [ class "collection" ]
-      (List.map (trackRow isPlaying currentSrc) tracks)
+      (List.map (trackRow isPlaying currentTrackUrl) tracks)
 
 trackRow : Bool -> Maybe String -> Track -> Html Msg
-trackRow isPlaying currentSrc track =
+trackRow isPlaying currentTrackUrl track =
     let
       artist =
-          Maybe.withDefault "unknown" (List.head track.artists)
-
-      src =
-          Maybe.withDefault "" currentSrc
-
-      msg =
-        if track.previewUrl == src && isPlaying then
-          Msgs.AudioStop src
-        else
-          Msgs.AudioStart track.previewUrl
-
-      icon =
-        if track.previewUrl == src && isPlaying then
-          "pause"
-        else if track.previewUrl == "" then
-          "remove"
-        else
-          "play_arrow"
-
-      action =
-        if track.previewUrl == "" then
-          i [ class "material-icons track-icon" ]
-            [ text icon ]
-        else
-          a [ onClick msg ]
-            [ i
-              [ class "material-icons track-icon" ]
-              [ text icon ]
-            ]
+        Maybe.withDefault "unknown" (List.head track.artists)
+      currentUrl =
+        Maybe.withDefault "" (currentTrackUrl)
+      attrs =
+        case track.previewUrl of
+          Just url ->
+            if url == currentUrl && isPlaying then
+              [ onClick (Msgs.AudioStop url) ]
+            else
+              [ onClick (Msgs.AudioStart url) ]
+          Nothing ->
+            []
     in
-      li [ class "collection-item" ]
-        [ action
-         , div [] [ text (track.name ++ " - " ++  artist) ]
-         ]
+      li ([ class "collection-item track-row" ] ++ attrs)
+        [ (trackIcon isPlaying currentUrl track.previewUrl)
+        , div [] [ text (track.name ++ " - " ++  artist) ]
+        ]
+
+trackIcon: Bool -> String -> Maybe String -> Html Msg
+trackIcon isPlaying currentUrl previewUrl =
+  let
+    icon =
+      case previewUrl of
+        Just url ->
+          if url == currentUrl && isPlaying then
+            "pause"
+          else
+            "play_arrow"
+        Nothing ->
+          "remove"
+  in
+    i [ class "material-icons" ]
+      [ text icon ]
+
 
 followBtn : String -> Bool -> Html Msg
 followBtn playlistName isFollowing =

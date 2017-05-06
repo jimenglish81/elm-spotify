@@ -104,7 +104,11 @@ nav .nav-wrapper ul {
   align-items: center;
 }
 
-.track-icon {
+.track-row {
+  cursor: pointer;
+}
+
+.track-row .material-icons {
   color: #2ebd59;
 }
 

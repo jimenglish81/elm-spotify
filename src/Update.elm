@@ -22,14 +22,14 @@ update msg model =
             parseLocation location
 
           cmd =
-            case model.currentSrc of
-              Just src ->
-                Ports.audioStop src
+            case model.currentTrackUrl of
+              Just url ->
+                Ports.audioStop url
 
               Nothing ->
                 Cmd.none
         in
-          ( { model | route = newRoute, currentSrc = Nothing, isPlaying = False }, Cmd.batch [ cmd, getRouteCmd newRoute ] )
+          ( { model | route = newRoute, currentTrackUrl = Nothing, isPlaying = False }, Cmd.batch [ cmd, getRouteCmd newRoute ] )
 
       Msgs.UpdateQuery str ->
         ( { model | query = str }, Cmd.none )
@@ -93,11 +93,11 @@ update msg model =
       Msgs.OnUser response ->
         ( { model | user = response }, Cmd.none )
 
-      Msgs.AudioStart src ->
-        ( { model | currentSrc = Just src, isPlaying = True }, Ports.audioStart src )
+      Msgs.AudioStart url ->
+        ( { model | currentTrackUrl = Just url, isPlaying = True }, Ports.audioStart url )
 
-      Msgs.AudioStop src ->
-        ( { model | isPlaying = False }, Ports.audioStop src )
+      Msgs.AudioStop url ->
+        ( { model | isPlaying = False }, Ports.audioStop url )
 
 updateIsFollowing : Model -> WebData Bool -> Model
 updateIsFollowing model isFollowing =
