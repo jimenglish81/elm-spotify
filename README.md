@@ -10,5 +10,4 @@ Set ENV `SPOTIFY_CLIENT_ID` as the Spotify oAuth client id.
 
 ## TODO
 
-- add 30 second preview to tracks
 - restore session on refresh?
