@@ -3,6 +3,7 @@ module Models exposing (..)
 import RemoteData exposing (WebData)
 import OAuth
 
+
 type alias Model =
     { playlists : WebData (List Playlist)
     , tracks : WebData (List Track)
@@ -11,15 +12,16 @@ type alias Model =
     , client : OAuth.Client
     , redirectUrl : String
     , token : Maybe OAuth.Token
-    , route: Route
+    , route : Route
     , userId : String
     , playlistId : String
-    , currentTrackUrl : Maybe String
+    , currentTrackUrl : Maybe Url
     , isPlaying : Bool
     }
 
-initialModel : Route -> OAuth.Client -> String -> Model
-initialModel route client redirectUrl =
+
+initialModel : Route -> OAuth.Client -> Url -> Model
+initialModel route client (Url redirectUrl) =
     { playlists = RemoteData.NotAsked
     , tracks = RemoteData.NotAsked
     , user = RemoteData.NotAsked
@@ -34,20 +36,25 @@ initialModel route client redirectUrl =
     , isPlaying = False
     }
 
+
 type Route
     = SearchRoute
     | SearchResultRoute Query
     | PlaylistRoute UserId PlaylistId
     | NotFoundRoute
 
+
 type alias PlaylistId =
     String
+
 
 type alias UserId =
     String
 
+
 type alias Query =
     String
+
 
 type alias Playlist =
     { id : PlaylistId
@@ -55,33 +62,48 @@ type alias Playlist =
     , href : String
     , userId : String
     , isFollowing : WebData Bool
-    , images : (List String)
+    , images : List String
     }
+
 
 type alias Track =
     { name : String
-    , artists : (List String)
-    , previewUrl : (Maybe String)
+    , artists : List String
+    , previewUrl : Maybe Url
     }
+
 
 type alias User =
     { id : UserId
     }
+
 
 type alias Flags =
     { clientId : String
     , redirectUrl : String
     }
 
-spotifyAuthClient : String -> String -> OAuth.Client
-spotifyAuthClient clientId redirectUrl =
+
+type ClientId
+    = ClientId String
+
+
+type Url
+    = Url String
+
+
+spotifyAuthClient : ClientId -> Url -> OAuth.Client
+spotifyAuthClient (ClientId clientId) (Url redirectUrl) =
     OAuth.newClient
         { authorizeUrl = "https://accounts.spotify.com/authorize"
         , tokenUrl = "https://accounts.spotify.com/api/token"
         , validateUrl = "https://api.spotify.com/v1/me"
         }
         { clientId = clientId
-        , scopes = [ "playlist-modify-public", "playlist-read-private" ]
+        , scopes =
+            [ "playlist-modify-public"
+            , "playlist-read-private"
+            ]
         , redirectUrl = redirectUrl
         , authFlow = OAuth.Implicit
         }
