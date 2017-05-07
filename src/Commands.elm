@@ -189,7 +189,7 @@ previewUrlDecode : Decoder (Maybe Url -> b) -> Decoder b
 previewUrlDecode =
     Decode.field "preview_url" Decode.string
         |> Decode.map Url
-        |> Decode.map Just
+        |> Decode.maybe
         |> custom
 
 
