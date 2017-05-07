@@ -1,6 +1,6 @@
 module View exposing (..)
 
-import Html exposing (..)
+import Html exposing (Html, div, main_, text)
 import Html.Attributes exposing (class)
 import Msgs exposing (Msg)
 import Models exposing (Model, PlaylistId)

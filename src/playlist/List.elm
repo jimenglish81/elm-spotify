@@ -1,6 +1,6 @@
 module Playlist.List exposing (..)
 
-import Html exposing (..)
+import Html exposing (Html, a, div, img, text)
 import Html.Attributes
     exposing
         ( alt

@@ -1,6 +1,16 @@
 module Playlist.Tracks exposing (..)
 
-import Html exposing (..)
+import Html
+    exposing
+        ( Html
+        , a
+        , div
+        , h3
+        , i
+        , li
+        , ul
+        , text
+        )
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 import Msgs exposing (Msg)

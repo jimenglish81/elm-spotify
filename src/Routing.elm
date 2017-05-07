@@ -4,7 +4,17 @@ import Navigation exposing (Location)
 import Msgs exposing (Msg)
 import Models exposing (Query, PlaylistId, UserId, Route(..))
 import Commands exposing (search)
-import UrlParser exposing (..)
+import UrlParser
+    exposing
+        ( Parser
+        , map
+        , oneOf
+        , parseHash
+        , s
+        , string
+        , top
+        , (</>)
+        )
 import Task
 import OAuth
 
