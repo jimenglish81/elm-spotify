@@ -11,61 +11,58 @@ import Html.Attributes
         , title
         )
 import Models exposing (Model, Playlist)
-import Msgs exposing (Msg)
 import RemoteData exposing (WebData)
 import Routing exposing (playlistPath, maybeToken)
 import Common.View exposing (errorMsg, loader)
 import OAuth
 
 
-view : Model -> Html Msg
+view : Model -> Html a
 view model =
     maybeList model
 
 
-maybeList : Model -> Html Msg
-maybeList model =
-    let
-        response =
-            model.playlists
-    in
-        case response of
-            RemoteData.NotAsked ->
-                text ""
+maybeList : Model -> Html a
+maybeList { playlists, token } =
+    case playlists of
+        RemoteData.NotAsked ->
+            text ""
 
-            RemoteData.Loading ->
-                loader
+        RemoteData.Loading ->
+            loader
 
-            RemoteData.Success playlists ->
-                list model.token playlists
+        RemoteData.Success response ->
+            list token response
 
-            RemoteData.Failure error ->
-                errorMsg
+        RemoteData.Failure _ ->
+            errorMsg
 
 
-list : Maybe OAuth.Token -> List Playlist -> Html Msg
+list : Maybe OAuth.Token -> List Playlist -> Html a
 list token playlists =
-    div [ class "image-grid" ]
-        (List.map (playlistRow token) playlists)
+    div [ class "image-grid" ] <|
+        List.map
+            (playlistRow token)
+            playlists
 
 
-playlistRow : Maybe OAuth.Token -> Playlist -> Html Msg
+playlistRow : Maybe OAuth.Token -> Playlist -> Html a
 playlistRow token playlist =
     div [ class "image-grid-item" ]
         [ playlistBtn token playlist ]
 
 
-playlistBtn : Maybe OAuth.Token -> Playlist -> Html Msg
+playlistBtn : Maybe OAuth.Token -> Playlist -> Html a
 playlistBtn token playlist =
     let
         path =
             maybeToken
-                token
                 (playlistPath playlist.userId playlist.id)
                 playlist.href
+                token
 
         linkTarget =
-            maybeToken token "_self" "_blank"
+            maybeToken "_self" "_blank" token
 
         url =
             Maybe.withDefault

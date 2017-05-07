@@ -87,7 +87,7 @@ trackRow isPlaying currentTrackUrl track =
             ]
 
 
-trackIcon : Bool -> Url -> Maybe Url -> Html Msg
+trackIcon : Bool -> Url -> Maybe Url -> Html a
 trackIcon isPlaying currentUrl previewUrl =
     let
         icon =

@@ -2,10 +2,9 @@ module Common.View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class)
-import Msgs exposing (Msg)
 
 
-loader : Html Msg
+loader : Html a
 loader =
     div
         [ class "loader"
@@ -21,7 +20,7 @@ loader =
         ]
 
 
-errorMsg : Html Msg
+errorMsg : Html a
 errorMsg =
     div [ class "error" ]
         [ text "There has been an error." ]

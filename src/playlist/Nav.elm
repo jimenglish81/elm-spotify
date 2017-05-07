@@ -61,7 +61,7 @@ loggedIn user _ =
             text "fail"
 
 
-loginBtn : OAuth.Client -> Html Msg
+loginBtn : OAuth.Client -> Html a
 loginBtn client =
     a
         [ href <| OAuth.buildAuthUrl client

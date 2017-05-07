@@ -71,8 +71,8 @@ getRouteCmd route =
             Cmd.none
 
 
-maybeToken : Maybe OAuth.Token -> a -> a -> a
-maybeToken token valid invalid =
+maybeToken : a -> a -> Maybe OAuth.Token -> a
+maybeToken valid invalid token =
     case token of
         Just token ->
             case token of

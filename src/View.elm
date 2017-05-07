@@ -63,7 +63,7 @@ playlistPage model playlistId =
             errorMsg
 
 
-notFoundView : Html msg
+notFoundView : Html a
 notFoundView =
     div [ class "error" ]
         [ text "Not found" ]
