@@ -10,7 +10,7 @@ type alias Model =
     , user : WebData User
     , query : String
     , client : OAuth.Client
-    , redirectUrl : String
+    , redirectUrl : Url
     , token : Maybe OAuth.Token
     , route : Route
     , userId : String
@@ -21,7 +21,7 @@ type alias Model =
 
 
 initialModel : Route -> OAuth.Client -> Url -> Model
-initialModel route client (Url redirectUrl) =
+initialModel route client redirectUrl =
     { playlists = RemoteData.NotAsked
     , tracks = RemoteData.NotAsked
     , user = RemoteData.NotAsked
