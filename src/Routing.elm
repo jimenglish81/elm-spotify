@@ -95,13 +95,10 @@ maybeToken valid invalid token =
 
 redirectToSearch : String -> Cmd Msg
 redirectToSearch query =
-    let
-        url =
-            case query of
-                "" ->
-                    searchPath
+    Navigation.newUrl <|
+        case query of
+            "" ->
+                searchPath
 
-                _ ->
-                    searchResultPath query
-    in
-        Navigation.newUrl (url)
+            _ ->
+                searchResultPath query
