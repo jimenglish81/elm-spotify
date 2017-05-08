@@ -1,6 +1,20 @@
 module Playlist.Nav exposing (..)
 
-import Html exposing (..)
+import Html
+    exposing
+        ( Html
+        , Attribute
+        , a
+        , div
+        , header
+        , i
+        , input
+        , label
+        , li
+        , nav
+        , ul
+        , text
+        )
 import Html.Attributes
     exposing
         ( autofocus
@@ -11,7 +25,7 @@ import Html.Attributes
         , type_
         , value
         )
-import Html.Events exposing (..)
+import Html.Events exposing (keyCode, on, onInput)
 import Msgs exposing (Msg)
 import Json.Decode as Json
 import View.Extra exposing (viewMaybe)
@@ -61,7 +75,7 @@ loggedIn user _ =
             text "fail"
 
 
-loginBtn : OAuth.Client -> Html Msg
+loginBtn : OAuth.Client -> Html a
 loginBtn client =
     a
         [ href <| OAuth.buildAuthUrl client

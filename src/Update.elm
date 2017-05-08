@@ -56,16 +56,10 @@ update msg model =
             let
                 currentUserId =
                     case model.user of
-                        RemoteData.NotAsked ->
-                            ""
-
-                        RemoteData.Loading ->
-                            ""
-
                         RemoteData.Success user ->
                             user.id
 
-                        RemoteData.Failure error ->
+                        otherwise ->
                             ""
             in
                 ( { model
@@ -95,7 +89,7 @@ update msg model =
             in
                 ( { model | token = token }, getUser token )
 
-        Msgs.Token (Err _) ->
+        Msgs.Token _ ->
             model ! []
 
         Msgs.Follow ->
@@ -112,14 +106,16 @@ update msg model =
         Msgs.OnFollow (RemoteData.Success _) ->
             ( updateIsFollowing
                 model
-                (RemoteData.Success True)
+              <|
+                RemoteData.Success True
             , Cmd.none
             )
 
         Msgs.OnFollow _ ->
             ( updateIsFollowing
                 model
-                (RemoteData.Success False)
+              <|
+                RemoteData.Success False
             , Cmd.none
             )
 
@@ -137,7 +133,8 @@ update msg model =
         Msgs.OnUnFollow (RemoteData.Success _) ->
             ( updateIsFollowing
                 model
-                (RemoteData.Success False)
+              <|
+                RemoteData.Success False
             , Cmd.none
             )
 

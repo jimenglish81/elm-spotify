@@ -1,20 +1,20 @@
 module View exposing (..)
 
-import Html exposing (..)
+import Html exposing (Html, div, main_, text)
 import Html.Attributes exposing (class)
 import Msgs exposing (Msg)
 import Models exposing (Model, PlaylistId)
 import RemoteData
-import Playlist.List
-import Playlist.Nav
-import Playlist.Tracks
+import Playlist.List as PL
+import Playlist.Nav as PN
+import Playlist.Tracks as PT
 import Common.View exposing (errorMsg, loader)
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ Playlist.Nav.view model
+        [ PN.view model
         , main_ [ class "container" ] [ page model ]
         ]
 
@@ -26,7 +26,7 @@ page model =
             text ""
 
         Models.SearchResultRoute _ ->
-            Playlist.List.view model
+            PL.view model
 
         Models.PlaylistRoute _ playlistId ->
             playlistPage model playlistId
@@ -54,7 +54,7 @@ playlistPage model playlistId =
             in
                 case maybePlaylist of
                     Just playlist ->
-                        Playlist.Tracks.view model playlist
+                        PT.view model playlist
 
                     Nothing ->
                         notFoundView
@@ -63,7 +63,7 @@ playlistPage model playlistId =
             errorMsg
 
 
-notFoundView : Html msg
+notFoundView : Html a
 notFoundView =
     div [ class "error" ]
         [ text "Not found" ]

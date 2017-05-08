@@ -20,15 +20,15 @@ import Ports
 
 
 init : Flags -> Location -> ( Model, Cmd Msg )
-init flags location =
+init { clientId, redirectUrl } location =
     let
         currentRoute =
             parseLocation location
 
         client =
             (spotifyAuthClient
-                (ClientId flags.clientId)
-                (Url flags.redirectUrl)
+                (ClientId clientId)
+                (Url redirectUrl)
             )
 
         cmd =
@@ -42,14 +42,14 @@ init flags location =
             currentRoute
             client
           <|
-            Url flags.redirectUrl
+            Url redirectUrl
         , cmd
         )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Ports.audioFinished (\s -> Msgs.AudioStop (Url s))
+    Ports.audioFinished <| Msgs.AudioStop << Url
 
 
 main : Program Flags Model Msg

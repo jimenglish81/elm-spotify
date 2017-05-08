@@ -1,6 +1,16 @@
 module Playlist.Tracks exposing (..)
 
-import Html exposing (..)
+import Html
+    exposing
+        ( Html
+        , a
+        , div
+        , h3
+        , i
+        , li
+        , ul
+        , text
+        )
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 import Msgs exposing (Msg)
@@ -55,18 +65,19 @@ trackRow isPlaying currentTrackUrl track =
         artist =
             Maybe.withDefault
                 "unknown"
-                (List.head track.artists)
+            <|
+                List.head track.artists
 
         currentUrl =
-            Maybe.withDefault (Url "") (currentTrackUrl)
+            Maybe.withDefault (Url "") currentTrackUrl
 
         attrs =
             case track.previewUrl of
                 Just url ->
                     if url == currentUrl && isPlaying then
-                        [ onClick (Msgs.AudioStop url) ]
+                        [ onClick <| Msgs.AudioStop url ]
                     else
-                        [ onClick (Msgs.AudioStart url) ]
+                        [ onClick <| Msgs.AudioStart url ]
 
                 Nothing ->
                     []
@@ -87,7 +98,7 @@ trackRow isPlaying currentTrackUrl track =
             ]
 
 
-trackIcon : Bool -> Url -> Maybe Url -> Html Msg
+trackIcon : Bool -> Url -> Maybe Url -> Html a
 trackIcon isPlaying currentUrl previewUrl =
     let
         icon =
@@ -111,21 +122,13 @@ trackIcon isPlaying currentUrl previewUrl =
 followBtn : String -> Bool -> Html Msg
 followBtn playlistName isFollowing =
     let
-        btnText =
+        ( btnText, msg ) =
             case isFollowing of
                 True ->
-                    text "unfollow"
+                    ( text "unfollow", Msgs.UnFollow )
 
                 False ->
-                    text "follow"
-
-        msg =
-            case isFollowing of
-                True ->
-                    Msgs.UnFollow
-
-                False ->
-                    Msgs.Follow
+                    ( text "follow", Msgs.Follow )
     in
         a
             [ class "btn waves-effect waves-light scale-transition"
@@ -138,14 +141,8 @@ followBtn playlistName isFollowing =
 maybeFollowBtn : Playlist -> Html Msg
 maybeFollowBtn { isFollowing, name } =
     case isFollowing of
-        RemoteData.NotAsked ->
-            text ""
-
-        RemoteData.Loading ->
-            text ""
-
         RemoteData.Success resp ->
             followBtn name resp
 
-        RemoteData.Failure error ->
+        otherwise ->
             text ""

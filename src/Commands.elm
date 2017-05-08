@@ -1,6 +1,6 @@
 module Commands exposing (..)
 
-import Http exposing (..)
+import Http
 import Json.Decode as Decode exposing (Decoder)
 import Json.Decode.Pipeline
     exposing

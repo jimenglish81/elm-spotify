@@ -4,7 +4,17 @@ import Navigation exposing (Location)
 import Msgs exposing (Msg)
 import Models exposing (Query, PlaylistId, UserId, Route(..))
 import Commands exposing (search)
-import UrlParser exposing (..)
+import UrlParser
+    exposing
+        ( Parser
+        , map
+        , oneOf
+        , parseHash
+        , s
+        , string
+        , top
+        , (</>)
+        )
 import Task
 import OAuth
 
@@ -71,8 +81,8 @@ getRouteCmd route =
             Cmd.none
 
 
-maybeToken : Maybe OAuth.Token -> a -> a -> a
-maybeToken token valid invalid =
+maybeToken : a -> a -> Maybe OAuth.Token -> a
+maybeToken valid invalid token =
     case token of
         Just token ->
             case token of
@@ -85,13 +95,10 @@ maybeToken token valid invalid =
 
 redirectToSearch : String -> Cmd Msg
 redirectToSearch query =
-    let
-        url =
-            case query of
-                "" ->
-                    searchPath
+    Navigation.newUrl <|
+        case query of
+            "" ->
+                searchPath
 
-                _ ->
-                    searchResultPath query
-    in
-        Navigation.newUrl (url)
+            _ ->
+                searchResultPath query
